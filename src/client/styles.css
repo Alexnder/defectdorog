@@ -1,0 +1,8 @@
+.add-defect {
+  display: flex;
+  padding: 10px;
+}
+
+.active-defect {
+  border: 1px black solid;
+}
