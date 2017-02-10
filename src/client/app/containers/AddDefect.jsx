@@ -1,5 +1,7 @@
 import React from 'react';
-import Input from './Input.jsx';
+import { connect } from 'react-redux';
+import Input from '../components/Input.jsx';
+import { addDefect } from '../actions';
 
 class AddDefect extends React.Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class AddDefect extends React.Component {
   }
 
   onAdd(e) {
+    console.log('onAdd', this.state);
     this.props.onSaveState(this.state);
     this.setState((prevState, props) => ({ ...props.defect }));
   }
@@ -44,5 +47,28 @@ class AddDefect extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    defect: state.activeDefect,
+    id: state.activeDefectId,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSaveState: (defect) => {
+      dispatch(addDefect(defect))
+    },
+    onCancel: () => {
+      dispatch(cancelEditDefect())
+    }
+  }
+}
+
+AddDefect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddDefect);
 
 export default AddDefect;
